@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOLIZ | المنيو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#BE5A14; --deep:#8F3F0A; --cream:#FFF3E4; --ink:#3A1C06; --white:#FFFFFF;
+  box-sizing:border-box; color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:"Cairo",system-ui,sans-serif;font-size:17px;line-height:1.6;padding-bottom:100px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--cream);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+.lil{font-family:"Lilita One","Cairo",sans-serif;font-weight:400;letter-spacing:.02em}
+header{text-align:center;padding:26px 0 4px}
+.logo{margin:0;font-size:64px;line-height:1;color:var(--white);text-shadow:0 4px 0 var(--deep)}
+.sub{margin:6px 0 0;opacity:.9;font-size:15px}
+
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:8px;overflow-x:auto;padding:14px 18px;margin:0 -18px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:6px 20px;border-radius:999px;border:2px solid var(--white);background:transparent;color:var(--white);font-size:19px;line-height:1.4}
+.tab[aria-pressed="true"]{background:var(--white);color:var(--bg)}
+
+.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:4px;align-items:stretch}
+.item{display:flex;flex-direction:column;padding:10px 12px;border:1.5px solid rgba(255,255,255,.85);border-radius:14px}
+.item h3{margin:0;font-size:17px;line-height:1.25}
+.item small{display:block;opacity:.85;font-size:11.5px;letter-spacing:.04em;direction:ltr;text-align:right}
+.opts{margin-top:auto;padding-top:8px;display:grid;gap:6px}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pl{font-weight:700}
+.pl i{font-style:normal;font-weight:400;opacity:.9;margin-inline-start:8px}
+.add{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--white);color:var(--bg);font-size:26px;line-height:1}
+.add:active{transform:scale(.92)}
+.qty{flex:none;display:flex;align-items:center;gap:10px}
+.qty button{width:38px;height:38px;border-radius:50%;border:2px solid var(--white);background:transparent;color:var(--white);font-size:22px;line-height:1}
+.qty b{min-width:20px;text-align:center}
+
+.bar{position:fixed;inset:auto 0 0 0;z-index:10;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px))}
+.bar button{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:720px;margin:0 auto;padding:14px 22px;border:0;border-radius:999px;background:var(--white);color:var(--bg);font-weight:700;font-size:17px;box-shadow:0 6px 20px rgba(58,28,6,.35)}
+.bar.hide{display:none}
+
+.shade{position:fixed;inset:0;background:rgba(58,28,6,.55);z-index:20;display:none}
+.shade.open{display:block}
+.sheet{position:fixed;inset:auto 0 0 0;max-width:640px;margin:0 auto;z-index:21;max-height:86%;overflow:auto;background:var(--cream);color:var(--ink);border-radius:22px 22px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .3s}
+.sheet.open{transform:none}
+.sheet h2{margin:0 0 10px;font-size:24px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #E6D3BC}
+.row span{flex:1}
+.row small{color:#7A5A3C}
+.sheet .qty button{border-color:var(--bg);color:var(--bg)}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:20px;margin:16px 0}
+.send{width:100%;padding:14px;border:0;border-radius:999px;background:var(--bg);color:#fff;font-weight:700;font-size:18px}
+.close{background:none;border:0;color:#7A5A3C;margin-top:10px;width:100%;padding:8px}
+.done{text-align:center;padding:16px 0;font-size:40px}
+.done h2{font-size:24px}.done p{font-size:17px;margin:6px 0 0}
+.pm{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 16px;margin:0 0 8px;border:2px solid #E6D3BC;border-radius:14px;background:#fff;color:var(--ink);font-size:18px}
+.pm.on{border-color:var(--bg);background:#FFE9D2}
+.pm span+span{font-size:14px;color:#7A5A3C}
+.seg{display:flex;gap:8px;margin:0 0 10px}
+.seg button{flex:1;padding:10px;border:2px solid var(--bg);border-radius:999px;background:transparent;color:var(--bg);font-size:17px}
+.seg button.on{background:var(--bg);color:#fff}
+.fld{width:100%;padding:12px 14px;border:2px solid #E6D3BC;border-radius:12px;font:inherit;font-size:18px;background:#fff;color:var(--ink)}
+.err{color:#B3261E;min-height:1.4em;margin:6px 0 0;font-size:15px}
+.paynote{color:#7A5A3C;font-size:15px;margin:2px 0 12px}
+a.send{display:block;text-align:center;text-decoration:none}
+.note{text-align:center;opacity:.85;font-size:14px;margin-top:24px}
+.ph{height:70px;display:grid;place-items:center;margin-bottom:8px;border-radius:10px;background:rgba(255,255,255,.1)}
+.ph svg{height:52px;width:auto;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:699px){.list{gap:10px}.item{padding:9px 10px}.item h3{font-size:15.5px}.ph{height:60px;margin-bottom:6px}.ph svg{height:44px}.pl{font-size:15px}.pl i{display:block;margin:0;font-size:13px}.add{width:36px;height:36px;font-size:22px}.qty{gap:6px}.qty button{width:32px;height:32px}}
+@media (min-width:700px){
+ body{font-size:18px}
+ .logo{font-size:88px}
+ .sub{font-size:18px}
+ .tabs{justify-content:center;gap:12px}
+ .tab{font-size:22px;padding:8px 30px}
+ .item{padding:12px 14px}
+ .item h3{font-size:19px}
+ .item small{font-size:12px}
+ .ph{height:92px}.ph svg{height:68px}
+ .add{width:46px;height:46px;font-size:28px}
+ .qty button{width:42px;height:42px;font-size:24px}
+ .bar button{max-width:640px;font-size:19px;padding:16px 28px}
+ .sheet{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="logo lil">SOLIZ</h1>
+    <p class="sub">اختر طلبك وأرسله لنا</p>
+  </header>
+  <div class="tabs" id="tabs" role="group" aria-label="أقسام المنيو"></div>
+  <div class="list" id="list"></div>
+  <p class="note">الأسعار بالريال السعودي · الدفع عند الكاشير</p>
+</div>
+<div class="bar hide" id="bar"><button id="openCart"><span id="cnt"></span><span>عرض الطلب</span><span id="sum"></span></button></div>
+<div class="shade" id="shade"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="طلبك"></div>
+
+<script>
+function V(a,b){return [{l:"حار",p:a},{l:"بارد",p:b}]}
+function S(p){return [{l:"",p:p}]}
+var MENU=[
+ {cat:"COFFEE",ar:"القهوة",items:[
+  {id:1,n:"لاتيه",en:"LATTE",v:V(14,16)},
+  {id:2,n:"سبانش لاتيه",en:"SPANISH LATTE",v:V(16,18)},
+  {id:3,n:"كابتشينو",en:"CAPPUCCINO",v:S(14)},
+  {id:4,n:"فلات وايت",en:"FLAT WHITE",v:S(14)},
+  {id:5,n:"كورتادو",en:"CORTADO",v:S(12)},
+  {id:6,n:"إسبريسو",en:"ESPRESSO",v:S(8)},
+  {id:7,n:"رونق سيجنتشر",en:"RONQ SIGNATURE",v:S(18)},
+  {id:8,n:"سبانش لاتيه بالفستق",en:"PISTACHIO SPANISH LATTE",v:S(20)},
+  {id:9,n:"كلاود لاتيه بارد",en:"ICED CLOUD LATTE",v:S(19)},
+  {id:10,n:"في 60",en:"V60",v:V(18,20)},
+  {id:11,n:"قهوة اليوم",en:"COFFEE OF THE DAY",v:V(10,12)},
+  {id:12,n:"أمريكانو",en:"AMERICANO",v:V(10,12)},
+  {id:13,n:"كولد برو",en:"COLD BREW",v:S(14)},
+  {id:14,n:"كركديه",en:"HIBISCUS (KARKADE)",v:[{l:"وسط",p:15},{l:"كبير",p:18}]},
+  {id:15,n:"شاي خوخ مثلج",en:"PEACH ICED TEA",v:S(12)},
+  {id:16,n:"ماتشا",en:"MATCHA",v:V(16,18)},
+  {id:17,n:"شاي",en:"TEA",v:S(6)},
+  {id:18,n:"شوكولاتة",en:"CHOCOLATE",v:V(14,16)}]},
+ {cat:"SWEET",ar:"الحلويات",items:[
+  {id:21,n:"مدريد كيك",v:S(24)},{id:22,n:"فالدوم شوكولت",v:S(27)},{id:23,n:"كيكة عسل",v:S(18)},
+  {id:24,n:"تراميسو",v:S(20)},{id:25,n:"بودينج",v:S(26)},{id:26,n:"كوكيز",v:S(17)},
+  {id:27,n:"سان سباستيان",v:S(25)},{id:28,n:"كيكة سنكرز",v:S(24)},{id:29,n:"كيكة ماليلا",v:S(24)},
+  {id:30,n:"كيكة لندن",v:S(26)},{id:31,n:"كرانشي",v:S(13)},{id:32,n:"براونيز",v:S(13)}]},
+ {cat:"SANDWICH",ar:"الساندويتش",items:[
+  {id:41,n:"ساندويتش جبن حلوم",v:S(16)},{id:42,n:"ساندويتش رولة",v:S(16)},
+  {id:43,n:"ساندويتش دجاج باربيكيو",v:S(15)},{id:44,n:"ساندويتش سجنتشر",v:S(18)},
+  {id:45,n:"كرواسان الأصفر",v:S(12)},{id:46,n:"كرواسان سادة",v:S(10)},{id:47,n:"مشروب الفريد",v:S(16)}]}
+];
+var SV={
+cup:'<svg viewBox="0 0 100 80"><ellipse cx="50" cy="68" rx="34" ry="7"/><path d="M26 32h48v14c0 12-10 20-24 20S26 58 26 46z"/><path d="M74 38h6a8 8 0 0 1 0 16h-8"/><path d="M40 12c-4 5 4 8 0 14M52 10c-4 5 4 8 0 14M64 12c-4 5 4 8 0 14"/></svg>',
+esp:'<svg viewBox="0 0 100 80"><ellipse cx="50" cy="68" rx="28" ry="6"/><path d="M32 42h36v8c0 9-8 14-18 14S32 59 32 50z"/><path d="M68 46h4a6 6 0 0 1 0 12h-5"/><path d="M45 24c-3 4 3 6 0 10M56 24c-3 4 3 6 0 10"/></svg>',
+ice:'<svg viewBox="0 0 100 80"><path d="M32 24h36l-4 48H36z"/><path d="M30 24h40"/><path d="M52 24l8-16h12"/><rect x="40" y="34" width="9" height="9" rx="1"/><rect x="52" y="46" width="9" height="9" rx="1"/></svg>',
+cake:'<svg viewBox="0 0 100 80"><path d="M12 62V46L76 24l12 12v26z"/><path d="M12 46l64-12 12 2M76 24v38"/><circle cx="38" cy="32" r="4"/></svg>',
+cookie:'<svg viewBox="0 0 100 80"><circle cx="50" cy="42" r="28"/><circle cx="40" cy="34" r="3"/><circle cx="58" cy="36" r="3"/><circle cx="46" cy="52" r="3"/><circle cx="62" cy="52" r="2.5"/></svg>',
+brown:'<svg viewBox="0 0 100 80"><rect x="22" y="22" width="56" height="40" rx="6"/><path d="M22 42h56M50 22v40"/><path d="M34 32h6M60 52h6"/></svg>',
+sand:'<svg viewBox="0 0 100 80"><path d="M12 38c0-14 76-14 76 0z"/><path d="M14 46h72"/><path d="M14 52c8 6 12-4 20 0s12-4 20 0 12-4 20 0"/><path d="M12 60h76c0 8-10 12-38 12S12 68 12 60z"/></svg>',
+croi:'<svg viewBox="0 0 100 80"><path d="M10 58c4-26 20-36 40-36s36 10 40 36c-8-6-14-4-20 2-6-8-12-8-20-8s-14 0-20 8c-6-6-12-8-20-2z"/><path d="M34 28l8 20M50 24v24M66 28l-8 20"/></svg>'};
+var IC={1:'cup',2:'cup',3:'cup',4:'cup',5:'esp',6:'esp',7:'ice',8:'cup',9:'ice',10:'cup',11:'cup',12:'cup',13:'ice',14:'ice',15:'ice',16:'cup',17:'cup',18:'cup',
+21:'cake',22:'cake',23:'cake',24:'cake',25:'cake',26:'cookie',27:'cake',28:'cake',29:'cake',30:'cake',31:'cookie',32:'brown',
+41:'sand',42:'sand',43:'sand',44:'sand',45:'croi',46:'croi',47:'ice'};
+function ico(id){return SV[IC[id]]||''}
+var cur=0,cart={},tabs=document.getElementById('tabs'),list=document.getElementById('list'),
+bar=document.getElementById('bar'),sheet=document.getElementById('sheet'),shade=document.getElementById('shade');
+function find(id){for(var i=0;i<MENU.length;i++)for(var j=0;j<MENU[i].items.length;j++)if(MENU[i].items[j].id===id)return MENU[i].items[j]}
+function money(n){return n+" ر.س"}
+function parse(k){var a=k.split('-'),it=find(+a[0]);return{it:it,o:it.v[+a[1]]}}
+function tabsR(){tabs.innerHTML="";MENU.forEach(function(c,i){var b=document.createElement('button');b.className='tab lil';b.textContent=c.cat;b.setAttribute('aria-label',c.ar);b.setAttribute('aria-pressed',i===cur);b.onclick=function(){cur=i;tabsR();listR()};tabs.appendChild(b)})}
+function ctrl(k,name){var q=cart[k]||0;
+ if(!q)return '<button class="add" aria-label="أضف '+name+'" data-a="'+k+'">+</button>';
+ return '<div class="qty"><button aria-label="زيادة" data-a="'+k+'">+</button><b>'+q+'</b><button aria-label="إنقاص" data-r="'+k+'">−</button></div>'}
+function listR(){list.innerHTML=MENU[cur].items.map(function(x){
+ return '<div class="item"><div class="ph">'+ico(x.id)+'</div><h3>'+x.n+'</h3>'+(x.en?'<small>'+x.en+'</small>':'')+'<div class="opts">'+x.v.map(function(o,i){var k=x.id+'-'+i;
+  return '<div class="opt"><span class="pl">'+money(o.p)+(o.l?'<i>'+o.l+'</i>':'')+'</span>'+ctrl(k,x.n+(o.l?' '+o.l:''))+'</div>'}).join("")+'</div></div>'}).join("")}
+function totals(){var c=0,s=0;for(var k in cart){c+=cart[k];s+=cart[k]*parse(k).o.p}return{c:c,s:s}}
+function barR(){var t=totals();bar.classList.toggle('hide',!t.c);document.getElementById('cnt').textContent=t.c+" عنصر";document.getElementById('sum').textContent=money(t.s)}
+function change(k,d){cart[k]=Math.max(0,(cart[k]||0)+d);if(!cart[k])delete cart[k];listR();barR();if(sheet.classList.contains('open'))sheetR()}
+document.addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;
+ if(t.dataset.a)change(t.dataset.a,1);if(t.dataset.r)change(t.dataset.r,-1)});
+var mode='in',tbl='',nm='',last='',PH='966538407874';
+function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function sheetR(){var t=totals();if(!t.c){close();return}
+ sheet.innerHTML='<h2>طلبك</h2>'+Object.keys(cart).map(function(k){var p=parse(k);
+  return '<div class="row"><span>'+p.it.n+(p.o.l?' · '+p.o.l:'')+'<br><small>'+money(p.o.p)+'</small></span><div class="qty"><button aria-label="زيادة" data-a="'+k+'">+</button><b>'+cart[k]+'</b><button aria-label="إنقاص" data-r="'+k+'">−</button></div></div>'}).join("")+
+  '<div class="total"><span>المجموع</span><span>'+money(t.s)+'</span></div>'+
+  '<div class="seg"><button data-m="in" class="'+(mode==='in'?'on':'')+'">داخل المقهى</button><button data-m="out" class="'+(mode==='out'?'on':'')+'">استلام</button></div>'+
+  (mode==='in'?'<input id="tb" class="fld" inputmode="numeric" placeholder="رقم الطاولة" value="'+esc(tbl)+'">':'<input id="nm" class="fld" placeholder="الاسم" value="'+esc(nm)+'">')+
+  '<p class="err" id="err"></p><p class="paynote">الدفع عند الكاشير (مدى أو كاش)</p>'+
+  '<a class="send" id="send" target="_blank" rel="noopener">إرسال الطلب عبر واتساب</a><button class="close" id="cl">رجوع للمنيو</button>';
+ sheet.querySelectorAll('.seg button').forEach(function(b){b.onclick=function(){mode=b.dataset.m;sheetR()}});
+ var tb=document.getElementById('tb'),n=document.getElementById('nm');
+ if(tb)tb.oninput=function(){tbl=tb.value};if(n)n.oninput=function(){nm=n.value};
+ document.getElementById('send').onclick=send;document.getElementById('cl').onclick=close}
+function msg(){var t=totals(),L=['طلب جديد من المنيو:'];
+ Object.keys(cart).forEach(function(k){var p=parse(k);L.push('- '+p.it.n+(p.o.l?' ('+p.o.l+')':'')+' × '+cart[k]+' = '+money(cart[k]*p.o.p))});
+ L.push('المجموع: '+money(t.s));
+ L.push(mode==='in'?'داخل المقهى - طاولة '+String(tbl).trim():'استلام'+(nm.trim()?' - الاسم: '+nm.trim():''));
+ L.push('الدفع: عند الكاشير');return L.join('\n')}
+function send(e){
+ if(mode==='in'&&!String(tbl).trim()){e.preventDefault();document.getElementById('err').textContent='اكتب رقم الطاولة';return}
+ last='https://wa.me/'+PH+'?text='+encodeURIComponent(msg());this.href=last;setTimeout(done,300)}
+function done(){cart={};tbl='';nm='';listR();barR();
+ sheet.innerHTML='<div class="done">✅<h2>جهّزنا طلبك</h2><p>اضغط «إرسال» داخل واتساب لإتمام الطلب.</p><p style="font-size:15px"><a href="'+last+'" target="_blank" rel="noopener" style="color:var(--bg)">ما انفتح واتساب؟ اضغط هنا</a></p></div><button class="close" id="cl">إغلاق</button>';
+ document.getElementById('cl').onclick=close}
+function open(){shade.classList.add('open');sheet.classList.add('open');sheetR()}
+function close(){shade.classList.remove('open');sheet.classList.remove('open')}
+document.getElementById('openCart').onclick=open;shade.onclick=close;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+tabsR();listR();barR();
+</script>
+</body>
+</html>
