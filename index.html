@@ -33,6 +33,7 @@ header{text-align:center;padding:26px 0 4px}
 .item{display:flex;flex-direction:column;padding:10px 12px;border:1.5px solid rgba(255,255,255,.85);border-radius:14px}
 .item h3{margin:0;font-size:17px;line-height:1.25}
 .item small{display:block;opacity:.85;font-size:11.5px;letter-spacing:.04em;direction:ltr;text-align:right}
+.cal{font-size:12px;opacity:.9;margin-top:2px}
 .opts{margin-top:auto;padding-top:8px;display:grid;gap:6px}
 .opt{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .pl{font-weight:700}
@@ -112,24 +113,24 @@ function V(a,b){return [{l:"حار",p:a},{l:"بارد",p:b}]}
 function S(p){return [{l:"",p:p}]}
 var MENU=[
  {cat:"COFFEE",ar:"القهوة",items:[
-  {id:1,n:"لاتيه",en:"LATTE",v:V(14,16)},
-  {id:2,n:"سبانش لاتيه",en:"SPANISH LATTE",v:V(16,18)},
-  {id:3,n:"كابتشينو",en:"CAPPUCCINO",v:S(14)},
-  {id:4,n:"فلات وايت",en:"FLAT WHITE",v:S(14)},
-  {id:5,n:"كورتادو",en:"CORTADO",v:S(12)},
-  {id:6,n:"إسبريسو",en:"ESPRESSO",v:S(8)},
-  {id:7,n:"رونق سيجنتشر",en:"RONQ SIGNATURE",v:S(18)},
-  {id:8,n:"سبانش لاتيه بالفستق",en:"PISTACHIO SPANISH LATTE",v:S(20)},
-  {id:9,n:"كلاود لاتيه بارد",en:"ICED CLOUD LATTE",v:S(19)},
-  {id:10,n:"في 60",en:"V60",v:V(18,20)},
-  {id:11,n:"قهوة اليوم",en:"COFFEE OF THE DAY",v:V(10,12)},
-  {id:12,n:"أمريكانو",en:"AMERICANO",v:V(10,12)},
-  {id:13,n:"كولد برو",en:"COLD BREW",v:S(14)},
-  {id:14,n:"كركديه",en:"HIBISCUS (KARKADE)",v:[{l:"وسط",p:15},{l:"كبير",p:18}]},
-  {id:15,n:"شاي خوخ مثلج",en:"PEACH ICED TEA",v:S(12)},
-  {id:16,n:"ماتشا",en:"MATCHA",v:V(16,18)},
-  {id:17,n:"شاي",en:"TEA",v:S(6)},
-  {id:18,n:"شوكولاتة",en:"CHOCOLATE",v:V(14,16)}]},
+  {id:1,c:"190",n:"لاتيه",en:"LATTE",v:V(14,16)},
+  {id:2,c:"220-250",n:"سبانش لاتيه",en:"SPANISH LATTE",v:V(16,18)},
+  {id:3,c:"120",n:"كابتشينو",en:"CAPPUCCINO",v:S(14)},
+  {id:4,c:"170",n:"فلات وايت",en:"FLAT WHITE",v:S(14)},
+  {id:5,c:"90",n:"كورتادو",en:"CORTADO",v:S(12)},
+  {id:6,c:"5",n:"إسبريسو",en:"ESPRESSO",v:S(8)},
+  {id:7,c:"230-260",n:"رونق سيجنتشر",en:"RONQ SIGNATURE",v:S(18)},
+  {id:8,c:"300-350",n:"سبانش لاتيه بالفستق",en:"PISTACHIO SPANISH LATTE",v:S(20)},
+  {id:9,c:"140-210",n:"كلاود لاتيه بارد",en:"ICED CLOUD LATTE",v:S(19)},
+  {id:10,c:"5-10",n:"في 60",en:"V60",v:V(18,20)},
+  {id:11,c:"5-10",n:"قهوة اليوم",en:"COFFEE OF THE DAY",v:V(10,12)},
+  {id:12,c:"5-15",n:"أمريكانو",en:"AMERICANO",v:V(10,12)},
+  {id:13,c:"5-20",n:"كولد برو",en:"COLD BREW",v:S(14)},
+  {id:14,c:"70-100",n:"كركديه",en:"HIBISCUS (KARKADE)",v:[{l:"وسط",p:15},{l:"كبير",p:18}]},
+  {id:15,c:"100",n:"شاي خوخ مثلج",en:"PEACH ICED TEA",v:S(12)},
+  {id:16,c:"80-120",n:"ماتشا",en:"MATCHA",v:V(16,18)},
+  {id:17,c:"0-5",n:"شاي",en:"TEA",v:S(6)},
+  {id:18,c:"250-320",n:"شوكولاتة",en:"CHOCOLATE",v:V(14,16)}]},
  {cat:"SWEET",ar:"الحلويات",items:[
   {id:21,n:"مدريد كيك",v:S(24)},{id:22,n:"فالدوم شوكولت",v:S(27)},{id:23,n:"كيكة عسل",v:S(18)},
   {id:24,n:"تراميسو",v:S(20)},{id:25,n:"بودينج",v:S(26)},{id:26,n:"كوكيز",v:S(17)},
@@ -163,7 +164,7 @@ function ctrl(k,name){var q=cart[k]||0;
  if(!q)return '<button class="add" aria-label="أضف '+name+'" data-a="'+k+'">+</button>';
  return '<div class="qty"><button aria-label="زيادة" data-a="'+k+'">+</button><b>'+q+'</b><button aria-label="إنقاص" data-r="'+k+'">−</button></div>'}
 function listR(){list.innerHTML=MENU[cur].items.map(function(x){
- return '<div class="item"><div class="ph">'+ico(x.id)+'</div><h3>'+x.n+'</h3>'+(x.en?'<small>'+x.en+'</small>':'')+'<div class="opts">'+x.v.map(function(o,i){var k=x.id+'-'+i;
+ return '<div class="item"><div class="ph">'+ico(x.id)+'</div><h3>'+x.n+'</h3>'+(x.en?'<small>'+x.en+'</small>':'')+(x.c?'<div class="cal">'+x.c+' سعرة</div>':'')+'<div class="opts">'+x.v.map(function(o,i){var k=x.id+'-'+i;
   return '<div class="opt"><span class="pl">'+money(o.p)+(o.l?'<i>'+o.l+'</i>':'')+'</span>'+ctrl(k,x.n+(o.l?' '+o.l:''))+'</div>'}).join("")+'</div></div>'}).join("")}
 function totals(){var c=0,s=0;for(var k in cart){c+=cart[k];s+=cart[k]*parse(k).o.p}return{c:c,s:s}}
 function barR(){var t=totals();bar.classList.toggle('hide',!t.c);document.getElementById('cnt').textContent=t.c+" عنصر";document.getElementById('sum').textContent=money(t.s)}
