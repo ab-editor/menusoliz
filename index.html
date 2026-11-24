@@ -74,6 +74,8 @@ header{text-align:center;padding:26px 0 4px}
 a.send{display:block;text-align:center;text-decoration:none}
 .note{text-align:center;opacity:.85;font-size:14px;margin-top:24px}
 .ph{height:70px;display:grid;place-items:center;margin-bottom:8px;border-radius:10px;background:rgba(255,255,255,.1)}
+.banner{grid-column:1/-1;display:flex;justify-content:center;align-items:center;gap:34px;padding:4px 0 12px}
+.banner svg{height:96px;width:auto;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ph svg{height:52px;width:auto;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:699px){.list{gap:10px}.item{padding:9px 10px}.item h3{font-size:15.5px}.ph{height:60px;margin-bottom:6px}.ph svg{height:44px}.pl{font-size:15px}.pl i{display:block;margin:0;font-size:13px}.add{width:36px;height:36px;font-size:22px}.qty{gap:6px}.qty button{width:32px;height:32px}}
 @media (min-width:700px){
@@ -86,6 +88,7 @@ a.send{display:block;text-align:center;text-decoration:none}
  .item h3{font-size:19px}
  .item small{font-size:12px}
  .ph{height:92px}.ph svg{height:68px}
+ .banner svg{height:132px}.banner{gap:48px}
  .add{width:46px;height:46px;font-size:28px}
  .qty button{width:42px;height:42px;font-size:24px}
  .bar button{max-width:640px;font-size:19px;padding:16px 28px}
@@ -154,6 +157,8 @@ var IC={1:'cup',2:'cup',3:'cup',4:'cup',5:'esp',6:'esp',7:'ice',8:'cup',9:'ice',
 21:'cake',22:'cake',23:'cake',24:'cake',25:'cake',26:'cookie',27:'cake',28:'cake',29:'cake',30:'cake',31:'cookie',32:'brown',
 41:'sand',42:'sand',43:'sand',44:'sand',45:'croi',46:'croi',47:'ice'};
 function ico(id){return SV[IC[id]]||''}
+var ART={COFFEE:['ice','cup'],SWEET:['cake','cookie'],SANDWICH:['sand','croi']};
+function banner(){return '<div class="banner" aria-hidden="true">'+ART[MENU[cur].cat].map(function(k){return SV[k]}).join('')+'</div>'}
 var cur=0,cart={},tabs=document.getElementById('tabs'),list=document.getElementById('list'),
 bar=document.getElementById('bar'),sheet=document.getElementById('sheet'),shade=document.getElementById('shade');
 function find(id){for(var i=0;i<MENU.length;i++)for(var j=0;j<MENU[i].items.length;j++)if(MENU[i].items[j].id===id)return MENU[i].items[j]}
@@ -163,7 +168,7 @@ function tabsR(){tabs.innerHTML="";MENU.forEach(function(c,i){var b=document.cre
 function ctrl(k,name){var q=cart[k]||0;
  if(!q)return '<button class="add" aria-label="أضف '+name+'" data-a="'+k+'">+</button>';
  return '<div class="qty"><button aria-label="زيادة" data-a="'+k+'">+</button><b>'+q+'</b><button aria-label="إنقاص" data-r="'+k+'">−</button></div>'}
-function listR(){list.innerHTML=MENU[cur].items.map(function(x){
+function listR(){list.innerHTML=banner()+MENU[cur].items.map(function(x){
  return '<div class="item"><div class="ph">'+ico(x.id)+'</div><h3>'+x.n+'</h3>'+(x.en?'<small>'+x.en+'</small>':'')+(x.c?'<div class="cal">'+x.c+' سعرة</div>':'')+'<div class="opts">'+x.v.map(function(o,i){var k=x.id+'-'+i;
   return '<div class="opt"><span class="pl">'+money(o.p)+(o.l?'<i>'+o.l+'</i>':'')+'</span>'+ctrl(k,x.n+(o.l?' '+o.l:''))+'</div>'}).join("")+'</div></div>'}).join("")}
 function totals(){var c=0,s=0;for(var k in cart){c+=cart[k];s+=cart[k]*parse(k).o.p}return{c:c,s:s}}
